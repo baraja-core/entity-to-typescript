@@ -103,7 +103,8 @@ final class EntityToTypescript
 		StructureResponse $structure,
 		Property $property,
 		DependencyBag $bag,
-	): void {
+	): void
+	{
 		$return = '';
 		foreach ($structure->structure as $item) {
 			$code = (string) $item->code;
