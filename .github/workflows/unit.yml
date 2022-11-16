@@ -1,0 +1,28 @@
+name: PHP Unit
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    types: [ assigned, opened, synchronize, reopened ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@master
+
+      - name: Install PHP
+        uses: shivammathur/setup-php@master
+        with:
+          php-version: 8.1
+
+      - name: Install composer deps
+        run: |
+          # Install app deps
+          composer install --no-interaction --prefer-dist
+
+      - name: Run Unit tests
+        run: ./vendor/bin/phpunit tests
