@@ -32,9 +32,9 @@ final class DependencyBag
 	/**
 	 * @param class-string $class
 	 */
-	public function addClass(string $class, ?string $alias = null): void
+	public function addClass(string $class): void
 	{
-		$this->classToAlias[$class] = $this->classAliasResolver->resolve($alias ?? $class, $this->classToAlias);
+		$this->classToAlias[$class] = $this->classAliasResolver->resolve($class, $this->classToAlias);
 	}
 
 

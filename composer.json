@@ -32,7 +32,7 @@
 		]
 	},
 	"minimum-stability": "stable",
- 	"config": {
+	"config": {
 		"allow-plugins": {
 			"phpstan/extension-installer": true
 		}
