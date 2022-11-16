@@ -10,6 +10,7 @@ use Baraja\EntityToTypescript\TypescriptHelpers;
 final class ClassAliasResolver implements Resolver
 {
 	/**
+	 * @param class-string $className
 	 * @param array<class-string, string> $context used aliases (className => alias)
 	 */
 	public function resolve(string $className, array $context): string

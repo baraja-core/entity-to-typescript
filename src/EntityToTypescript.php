@@ -135,7 +135,7 @@ final class EntityToTypescript
 
 		return sprintf(
 			'Record<%s, %s>',
-			Renderer::renderNativeType($item->key ?? 'number'),
+			Renderer::renderNativeType($item->key ?? 'number', 'key'),
 			Renderer::renderNativeType($type),
 		);
 	}

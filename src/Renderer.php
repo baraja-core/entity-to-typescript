@@ -26,11 +26,16 @@ final class Renderer
 	];
 
 
-	public static function renderNativeType(string $type): string
+	public static function renderNativeType(string $type, string $variant = 'value'): string
 	{
 		$type = (string) preg_replace('/\|null$/', '', $type);
 		if (isset(self::PhpTypeToTypescriptDefinition[$type])) {
-			return self::PhpTypeToTypescriptDefinition[$type];
+			$return = self::PhpTypeToTypescriptDefinition[$type];
+			if ($variant === 'key' && $return === 'boolean') {
+				$return = 'number';
+			}
+
+			return $return;
 		}
 		if ($type === 'array') {
 			return 'unknown[]';
