@@ -1,7 +1,7 @@
 {
-	"name": "baraja-core/template",
-	"description": "This is a template package.",
-	"homepage": "https://github.com/baraja-core/template",
+	"name": "baraja-core/entity-to-typescript",
+	"description": "Convert any PHP entity to TypeScript.",
+	"homepage": "https://github.com/baraja-core/entity-to-typescript",
 	"authors": [
 		{
 			"name": "Jan Barášek",
