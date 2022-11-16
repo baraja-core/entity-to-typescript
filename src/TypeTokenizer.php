@@ -63,7 +63,7 @@ final class TypeTokenizer
 		if ($len !== strlen($haystack)) {
 			$text = substr($haystack, 0, $len);
 			$line = substr_count($text, "\n") + 1;
-			$col = $len - strrpos("\n" . $text, "\n") + 1;
+			$col = $len - ((int) strrpos("\n" . $text, "\n")) + 1;
 			$token = str_replace("\n", '\n', substr($haystack, $len, 10));
 
 			throw new \LogicException(sprintf('Unexpected "%s" on line %s, column %s.', $token, $line, $col));

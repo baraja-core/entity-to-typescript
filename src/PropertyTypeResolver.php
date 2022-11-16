@@ -134,11 +134,18 @@ final class PropertyTypeResolver
 	private static function normalizeType(string $type, $reflection): string
 	{
 		$lower = strtolower($type);
-		if ($lower === 'self' || $lower === 'static') {
-			return $reflection->getDeclaringClass()->name;
+		$declaringClass = $reflection->getDeclaringClass();
+		if ($declaringClass === null) {
+			return $type;
 		}
-		if ($lower === 'parent' && $reflection->getDeclaringClass()->getParentClass() !== false) {
-			return $reflection->getDeclaringClass()->getParentClass()->name;
+		if ($lower === 'self' || $lower === 'static') {
+			return $declaringClass->name;
+		}
+		if ($lower === 'parent') {
+			$parentClass = $declaringClass->getParentClass();
+			if ($parentClass instanceof \ReflectionClass) {
+				return $parentClass->name;
+			}
 		}
 
 		return $type;
@@ -263,6 +270,7 @@ final class PropertyTypeResolver
 
 	/**
 	 * @param mixed[]|string|int $take
+	 * @phpstan-ignore-next-line
 	 */
 	private static function fetch(array &$tokens, array|string|int $take): ?string
 	{

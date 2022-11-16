@@ -88,7 +88,9 @@ final class StructureResolver
 		$response = new StructureResponse;
 		$response->sourceLine = $line;
 		$response->structure = $structure;
-		$response->comment = $finalTokenKey !== null ? $this->resolveComment($tokens, $finalTokenKey) : null;
+		$response->comment = $finalTokenKey !== null
+			? $this->resolveComment($tokens, $finalTokenKey)
+			: null;
 
 		return $response;
 	}

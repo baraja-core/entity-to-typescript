@@ -17,9 +17,7 @@ final class DependencyBag
 	 */
 	public array $classToAlias = [];
 
-	/**
-	 * @var array<class-string, array<int, Property>>
-	 */
+	/** @var array<class-string, array<int, Property>> */
 	public array $classToProperties = [];
 
 	private Resolver $classAliasResolver;
@@ -31,12 +29,18 @@ final class DependencyBag
 	}
 
 
+	/**
+	 * @param class-string $class
+	 */
 	public function addClass(string $class, ?string $alias = null): void
 	{
 		$this->classToAlias[$class] = $this->classAliasResolver->resolve($alias ?? $class, $this->classToAlias);
 	}
 
 
+	/**
+	 * @param class-string $class
+	 */
 	public function addClassProperty(string $class, Property $property): void
 	{
 		if (isset($this->classToProperties[$class]) === false) {
@@ -46,12 +50,18 @@ final class DependencyBag
 	}
 
 
+	/**
+	 * @param class-string $class
+	 */
 	public function isTypeRegistered(string $class): bool
 	{
 		return isset($this->classToAlias[$class]);
 	}
 
 
+	/**
+	 * @param class-string $class
+	 */
 	public function getEntityAlias(string $class): string
 	{
 		return $this->classToAlias[$class] ?? $class;

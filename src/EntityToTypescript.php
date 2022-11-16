@@ -24,6 +24,9 @@ final class EntityToTypescript
 	}
 
 
+	/**
+	 * @param object|class-string $entity
+	 */
 	public function process(object|string $entity, ?DependencyBag $bag = null): DependencyBag
 	{
 		$bag ??= new DependencyBag;
@@ -51,9 +54,10 @@ final class EntityToTypescript
 			$property->setAccessible(true);
 			$entity = new Property;
 			$bag->addClassProperty($ref->getName(), $entity);
+			$type = $property->getType();
 			$entity->ref = $property;
 			$entity->name = $property->getName();
-			$entity->type = $property->getType()?->getName();
+			$entity->type = $type instanceof \ReflectionNamedType ? $type->getName() : null;
 			$entity->nullable = (bool) $property->getType()?->allowsNull();
 
 			$realType = $this->resolveRealType($property);
@@ -98,11 +102,11 @@ final class EntityToTypescript
 	private function resolveStructuredResponse(
 		StructureResponse $structure,
 		Property $property,
-		DependencyBag $bag
+		DependencyBag $bag,
 	): void {
 		$return = '';
 		foreach ($structure->structure as $item) {
-			$code = $item->code;
+			$code = (string) $item->code;
 			if ($code === 'Record') {
 				$code = $this->resolveRecordType($item, $bag);
 			} elseif ($item->type !== null && class_exists($item->type)) {
@@ -124,6 +128,7 @@ final class EntityToTypescript
 	{
 		if ($item->key !== null
 			&& $item->key === $item->value
+			&& $item->type !== null
 			&& TypescriptHelpers::isBuiltinType($item->key) === false
 		) {
 			return sprintf('%s[]', $bag->getEntityAlias($item->type));
