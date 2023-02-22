@@ -48,22 +48,22 @@ final class Renderer
 	public function render(DependencyBag $bag): string
 	{
 		$return = '';
-		foreach ($bag->classToAlias as $class => $interfaceName) {
+		foreach ($bag->classToAlias as $class => $typeName) {
 			$properties = [];
 			foreach ($bag->classToProperties[$class] ?? [] as $property) {
 				$properties[] = $this->renderProperty($property, $bag);
 			}
-			$return .= $this->createInterface($interfaceName, implode("\n", $properties));
+			$return .= $this->createType($typeName, implode("\n", $properties));
 		}
 
 		return trim($return);
 	}
 
 
-	private function createInterface(string $name, string $content = ''): string
+	private function createType(string $name, string $content = ''): string
 	{
 		return sprintf(
-			'export interface %s {%s}' . "\n\n",
+			'export type %s = {%s}' . "\n\n",
 			TypescriptHelpers::firstUpper($name),
 			$content !== ''
 				? "\n  " . implode("\n  ", explode("\n", trim($content))) . "\n"
