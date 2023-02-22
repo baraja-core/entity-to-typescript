@@ -1,4 +1,4 @@
-export interface SampleEntity {
+export type SampleEntity = {
 	countryEntity: SampleCountry;
 	unknown: any;
 	myNumber: number;
@@ -12,7 +12,7 @@ export interface SampleEntity {
 	annotedArraySeven: Record<number, Record<number, Record<string, number>>>;
 }
 
-export interface SampleCountry {
+export type SampleCountry = {
 	id: number;
 	name: string;
 	code: string;
@@ -20,7 +20,7 @@ export interface SampleCountry {
 	cities: Record<number, string>;
 }
 
-export interface SampleProduct {
+export type SampleProduct = {
 	id: number;
 	name: string;
 	description?: string;
