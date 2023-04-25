@@ -63,7 +63,11 @@ final class StructureResolver
 				$lastStructureItem = &$structureItem;
 			} elseif ($token->type === '<' || $token->type === '{') {
 				if ($lastToken === null || $lastToken->type !== 'array') {
-					throw new \InvalidArgumentException('Parse error: Can not start array without "array" prefix.');
+					throw new \InvalidArgumentException(sprintf(
+						'Parse error: Property "%s" (in entity "%s") definition can not start array without "array" prefix.',
+						$property->getName(),
+						$property->getDeclaringClass()->getName(),
+					));
 				}
 				$arrayLevels[] = $token->type;
 				$levelHasBeenUsed = true;
